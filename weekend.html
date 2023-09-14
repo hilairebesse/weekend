@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+    <title>Un week-end avec Hilaire, fausse bonne idée ?</title>
+
+</head>
+<body>
+    <header>
+        <h1>Un week-end avec Hilaire, fausse bonne idée ?</h1>
+        <p>Vous avez choisi de passer un week-end avec Hilaire ? Il est beau, grand et drôle : nous vous comprenons.</p>
+        <p>Sa passion ? Laisser le hasard décider pour lui. Les puristes diront que c'est parce qu'il n'a aucune organisation.</p>
+        <p>Il leur repondra qu'il veut quelque chose d'unique pour vous, Anastasia.</p>
+        <p>Alors, prête à decouvrir votre week-end ? </p>
+
+
+    </header>
+
+    <main>
+        <section class="category" id="jour">
+            <h2 style="color:yellow">Activités du jour 🌤️</h2>
+            <button onclick="chooseActivity('jour')">Ana, cliquez ici pour découvrir votre activité 1 du jour</button>
+            <p id="activityJour"></p>
+            <button onclick="chooseActivity('jour2')">Ana, cliquez ici pour découvrir votre activité 2 du jour</button>
+            <p id="activityJour2"></p>
+        </section>
+
+        <section class="category" id="soir">
+            <h2 style="color:#fff">Activités du soir 🎉</h2>
+            <button onclick="chooseActivity('soir')">Ana, cliquez ici pour découvrir votre activité 1 du soir</button>
+            <p id="activitySoir"></p>
+            <button onclick="chooseActivity('soir2')">Ana, cliquez ici pour découvrir votre activité 2 du soir</button>
+            <p id="activitySoir2"></p>
+        </section>
+    </main>
+    <div id="modal" class="modal">
+    <div class="modal-content">
+        <div id="needle"></div>
+        <p>C'est parti !</p>
+    </div>
+</div>
+</body>
+</html>
+
+<style>
+
+/* Styles pour la modale */
+.modal {
+    display: none; /* Par défaut, la modale est cachée */
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+#jour {
+    background-color: #44bbbc; /* fond jaune */
+}
+
+#soir {
+    background-color: navy; /* fond bleu marine */
+}
+
+.modal-content {
+    padding: 20px;
+    background-color: white;
+    color: #0055a4;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    position: relative; /* Afin que l'aiguille soit positionnée par rapport à ce conteneur */
+
+    text-align: center;
+}
+
+
+#needle {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    width: 4px;
+    height: 50px;
+    background-color: #0055a4;
+    transform-origin: 50% 100%; /* Le point autour duquel l'aiguille tournera */
+    animation: rotateNeedle 2s linear infinite; /* 2 secondes pour compléter une rotation */
+}
+
+@keyframes rotateNeedle {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+body {
+  font-family: 'Poppins', sans-serif;
+    background: rgba(0, 0, 0, 0);
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.category {
+    margin: 2rem 0;
+    padding: 1rem;
+    border: 3px dashed white;
+    border-radius: 10px;
+}
+
+button {
+    background-color: white;
+    color: #0055a4;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#jour button:hover {
+    background-color: #cebf14;
+    color: white;
+}
+
+#soir button:hover {
+    background-color: #d73d16;
+    color: white;
+}
+
+p {
+    margin-top: 1rem;
+}
+
+</style>
+<script>
+function showSuspense() {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'flex';  // Affiche la modale
+
+    setTimeout(() => {
+        modal.style.display = 'none';  // Cache la modale après 2 secondes
+    }, 2000); // 2000 millisecondes équivalent à 2 secondes
+}
+
+const activitiesJour = [
+    "Visite du Louvre",
+    "Pique-nique près de la Tour Eiffel",
+    "Balade à Montmartre",
+    "Dégustation de gaufres belges"
+];
+
+const activitiesSoir = [
+    "Soirée karaoké à Paris",
+    "Dîner à Bruxelles",
+    "Spectacle de cabaret",
+    "Nuit blanche à Liège"
+];
+
+let chosenActivitiesJour = [];
+let chosenActivitiesSoir = [];
+
+function chooseActivity(time) {
+    showSuspense();
+
+    setTimeout(() => {
+        let activity, index;
+
+        switch(time) {
+            case 'jour':
+                do {
+                    index = Math.floor(Math.random() * activitiesJour.length);
+                    activity = activitiesJour[index];
+                } while (chosenActivitiesJour.includes(activity) && chosenActivitiesJour.length < activitiesJour.length);
+
+                if (!chosenActivitiesJour.includes(activity)) chosenActivitiesJour.push(activity);
+                document.getElementById('activityJour').textContent = activity;
+                break;
+
+            case 'jour2':
+                do {
+                    index = Math.floor(Math.random() * activitiesJour.length);
+                    activity = activitiesJour[index];
+                } while (chosenActivitiesJour.includes(activity) && chosenActivitiesJour.length < activitiesJour.length);
+
+                if (!chosenActivitiesJour.includes(activity)) chosenActivitiesJour.push(activity);
+                document.getElementById('activityJour2').textContent = activity;
+                break;
+
+            case 'soir':
+                do {
+                    index = Math.floor(Math.random() * activitiesSoir.length);
+                    activity = activitiesSoir[index];
+                } while (chosenActivitiesSoir.includes(activity) && chosenActivitiesSoir.length < activitiesSoir.length);
+
+                if (!chosenActivitiesSoir.includes(activity)) chosenActivitiesSoir.push(activity);
+                document.getElementById('activitySoir').textContent = activity;
+                break;
+
+            case 'soir2':
+                do {
+                    index = Math.floor(Math.random() * activitiesSoir.length);
+                    activity = activitiesSoir[index];
+                } while (chosenActivitiesSoir.includes(activity) && chosenActivitiesSoir.length < activitiesSoir.length);
+
+                if (!chosenActivitiesSoir.includes(activity)) chosenActivitiesSoir.push(activity);
+                document.getElementById('activitySoir2').textContent = activity;
+                break;
+        }
+    }, 2000);
+}
+
+function showSuspense() {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'flex';
+
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 2000);
+}
+
+</script>
